@@ -1,0 +1,42 @@
+{
+  "entities": {
+    "Giveaway": {
+      "title": "Giveaway",
+      "description": "Represents a giveaway event.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "The title of the giveaway." },
+        "slug": { "type": "string", "description": "Custom URL slug for the join link." },
+        "description": { "type": "string", "description": "Short description of the prize." },
+        "redirectUrl": { "type": "string", "description": "The external URL to redirect to after joining." },
+        "imageUrl": { "type": "string", "description": "Optional image for the giveaway." },
+        "endsAt": { "type": "string", "format": "date-time", "description": "When the giveaway expires." },
+        "status": { "type": "string", "enum": ["active", "ended"], "description": "Current status." },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "redirectUrl", "status"]
+    },
+    "Entry": {
+      "title": "Entry",
+      "description": "A single participation in a giveaway.",
+      "type": "object",
+      "properties": {
+        "giveawayId": { "type": "string" },
+        "discordUsername": { "type": "string" },
+        "joinedAt": { "type": "string", "format": "date-time" },
+        "email": { "type": "string" }
+      },
+      "required": ["giveawayId", "discordUsername", "joinedAt"]
+    }
+  },
+  "firestore": {
+    "/giveaways": {
+      "schema": "Giveaway",
+      "description": "Collection of all giveaways."
+    },
+    "/giveaways/{giveawayId}/entries": {
+      "schema": "Entry",
+      "description": "Entries for a specific giveaway."
+    }
+  }
+}

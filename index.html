@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Suppress the "Cannot set property fetch" error which happens in some iframe environments
+      window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('Cannot set property fetch')) {
+          e.stopImmediatePropagation();
+          return true;
+        }
+      }, true);
+      
+      // Also try to prevent it by defining a no-op setter if possible
+      try {
+        const descriptor = Object.getOwnPropertyDescriptor(WindowEventHandlers.prototype, 'fetch') || Object.getOwnPropertyDescriptor(window, 'fetch');
+        if (descriptor && !descriptor.set) {
+          const originalFetch = window.fetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() { return originalFetch; },
+            set: function() { console.warn('Blocked attempt to overwrite window.fetch'); },
+            configurable: true
+          });
+        }
+      } catch (e) {}
+    </script>
+    <title>MARCOXITERS GIVEWAY | Win Premium Rewards</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
